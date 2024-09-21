@@ -2,11 +2,12 @@ from pycocotools.coco import COCO
 from dataclasses import dataclass
 from os.path import join, basename, splitext, exists
 from os import makedirs, remove, listdir
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm as tqdm
 from zipfile import ZipFile
 import utils.utils as utils
 from enum import Enum
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class SubsetStrEnum(str, Enum):
     VALIDATION = "val2017"
@@ -48,7 +49,7 @@ class coco_category_filter:
     is_downloaded = exists(filepath)
     is_extracted = len([name for name in listdir(dst_path) if name != filename])>0
     if not is_extracted and not is_downloaded:
-        utils.download_file(url,filepath)
+        utils.download_file_with_progress_bar(url,filepath)
     if not is_extracted:
         with ZipFile(filepath, 'r') as zip_ref:
             zip_ref.extractall(dst_path)
@@ -56,12 +57,28 @@ class coco_category_filter:
     if is_extracted and exists(filepath):
         remove(filepath)
 
- def __download_images(self,images: list):
+ def __download_images(self,images: list, workers = 256):
     makedirs(self.image_dir,exist_ok=True)
-    for image in tqdm(iterable = images,unit="images",desc="Downloading images"):
-        filepath = join(self.image_dir,image["file_name"])
-        if not exists(filepath):
-            utils.download_file(image["coco_url"],filepath,use_progress_bar=False)
+
+    if workers is None:
+        for image in tqdm(iterable = images,unit="images",desc="Downloading images"):
+            filepath = join(self.image_dir,image["file_name"])
+            if not exists(filepath):
+                utils.download_file_without_progress_bar(image["coco_url"],filepath,)
+    else:
+        tasks = []
+        executor = ThreadPoolExecutor(max_workers=256)
+        # Use tqdm to create a progress bar
+        with tqdm(total=len(images),unit="images",desc="Downloading images") as progress_bar:
+            # Submit the download tasks
+            for image in images:
+                task = executor.submit( utils.download_file_without_progress_bar,image["coco_url"], join(self.image_dir,image["file_name"]))
+                tasks.append(task)
+
+            # Process the completed tasks
+            for completed_task in as_completed(tasks):
+                completed_task.result()
+                progress_bar.update(1)
 
  def __get_imgs_from_json(self):  
      cat_id_name = {}

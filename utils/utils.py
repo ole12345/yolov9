@@ -11,28 +11,34 @@ def pairwise(it):
             # no more elements in the iterator
             return
 
+def download_file_without_progress_bar(url, save_path):
+  try:
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+    with open(save_path, 'wb') as f:
+      for chunk in response.iter_content(chunk_size=8192):
+        f.write(chunk)
+    return True
+  except requests.exceptions.RequestException as e:
+    print(f"Error downloading {url}: {e}")
+    return False
 
-def download_file(url: str, fname: str, chunk_size=1024, use_progress_bar = True):
-    resp = requests.get(url, stream=True)
-    total = int(resp.headers.get('content-length', 0))
-    received = 0
-    if use_progress_bar:
+def download_file_with_progress_bar(url: str, fname: str, chunk_size=8192):
+    try:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+        total = int(response.headers.get('content-length', 0))
         with open(fname, 'wb') as file, tqdm(
             desc=basename(fname),
             total=total,
             unit='iB',
             unit_scale=True,
-            unit_divisor=1024,
+            unit_divisor=chunk_size,
         ) as bar:
-            for data in resp.iter_content(chunk_size=chunk_size):
+            for data in response.iter_content(chunk_size=chunk_size):
                 size = file.write(data)
                 bar.update(size)
-                received = received+ size
-    else:
-        with open(fname, 'wb') as file:
-           for data in resp.iter_content(chunk_size=chunk_size):
-                size = file.write(data)
-                received = received+ size
-
-    if received != total:
-        raise Exception("Failed to download '{}'".format(url))
+        return True
+    except requests.exceptions.RequestException as e:
+        print(f"Error downloading {url}: {e}")
+        return False

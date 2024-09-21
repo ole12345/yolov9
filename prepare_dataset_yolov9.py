@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
  #validation
  subset = SubsetStrEnum.VALIDATION
- max_number_of_images = None
+ max_number_of_images = 100
  cfg= DatasetConfig(root_dir = root_dir,dataset_name=dataset_name, subset = subset, max_number_of_images = max_number_of_images,category_list=category_list)
  cat_id_name_val = filter_dataset(cfg)
  yaml_content["val"] = subset+".txt"
