@@ -72,8 +72,8 @@ class coco_category_filter:
      imgIds = list()
      #try to get roughly equal amount of images for each category. Multiple categories per image are not counted.
      numCategories = len(cat_id_name)
-     self.max_number_of_images = len(self.coco.getImgIds()) if self.cfg.max_number_of_images is None else  self.cfg.max_number_of_images
-     req_num_images_per_category = self.cfg.max_number_of_images//numCategories
+     max_number_of_images = len(self.coco.getImgIds()) if self.cfg.max_number_of_images is None else  self.cfg.max_number_of_images
+     req_num_images_per_category = max_number_of_images//numCategories
      for id in cat_id_name.keys():
         imgids = self.coco.getImgIds(catIds=id)
         if len(imgids) >req_num_images_per_category:

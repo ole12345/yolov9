@@ -6,11 +6,11 @@ if __name__ == '__main__':
  root_dir = os.path.dirname(os.path.realpath(__file__))
  dataset_name="coco-2017-person-ball-small"
  category_list=["person","sports ball"]
- yaml_content = {"path":os.path.join("..","datasets",dataset_name)}
+ yaml_content = {"path":os.path.join(".","datasets",dataset_name)}
 
  #validation
  subset = SubsetStrEnum.VALIDATION
- max_number_of_images = 10
+ max_number_of_images = None
  cfg= DatasetConfig(root_dir = root_dir,dataset_name=dataset_name, subset = subset, max_number_of_images = max_number_of_images,category_list=category_list)
  cat_id_name_val = filter_dataset(cfg)
  yaml_content["val"] = subset+".txt"
