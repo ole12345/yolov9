@@ -2,7 +2,7 @@ from pycocotools.coco import COCO
 from dataclasses import dataclass
 from os.path import join, basename, splitext, exists
 from os import makedirs, remove, listdir
-from tqdm import tqdm
+from tqdm import tqdm_notebook as tqdm
 from zipfile import ZipFile
 import utils.utils as utils
 from enum import Enum
