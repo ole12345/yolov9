@@ -1,0 +1,2 @@
+import export
+export.run(include=['onnx'],weights="./runs/gelan-c-seg-test_coco_perpson_ball_21_epochs_batch32_size640/test_model3/weights/gelan-c-seg-test_coco_person_ball.pt",imgsz=(640,640),batch_size=1)
