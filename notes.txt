@@ -15,6 +15,12 @@ sportimization-3
     3 datasets merged. goalkeper and referee are treated as players
     dataset: ball-player
 
+sportimization-4
+    gelan-c (nc=2)
+    2 classes
+    3 datasets merged. goalkeper and referee are treated as players
+    dataset: ball-player + ~2.8k images from coco
+
 sportimization-3-gelan-s
     gelan-s (nc=2)
     2 classes
