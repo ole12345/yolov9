@@ -1,0 +1,16 @@
+sportimization-1
+    yolo-mit
+    v9-s
+    4 classes
+    dataset: football-players-detection-3zvbc <
+
+sportimization-2:
+    gelan-c (nc=80)
+    4 classes
+    dataset: football-players-detection-3zvbc (with some additional rotation and shear)
+
+sportimization-3
+    gelan-c (nc=80)
+    2 classes
+    3 datasets merged. goalkeper and referee are treated as players
+    dataset: ball-player
