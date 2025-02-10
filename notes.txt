@@ -1,32 +1,32 @@
-sportimization-1
+s-1
     yolo-mit
     v9-s
     4 classes
     dataset: football-players-detection-3zvbc <
 
-sportimization-2:
+s-2:
     gelan-c (nc=80)
     4 classes
     dataset: football-players-detection-3zvbc (with some additional rotation and shear)
 
-sportimization-3
+s-3
     gelan-c (nc=2)
     2 classes
     3 datasets merged. goalkeper and referee are treated as players
     dataset: ball-player
 
-sportimization-4
+s-4
     gelan-c (nc=2)
     2 classes
     dataset: ~2.8k images from coco
 
-sportimization-5
+s-5
     gelan-c (nc=2)
     2 classes
     big dataset. contains previous (sportimization-3) ~20k images
 
-sportimization-3-gelan-s
+s-6
     gelan-s (nc=2)
     2 classes
-    3 datasets merged. goalkeper and referee are treated as players
-    dataset: ball-player
+    big dataset
+    starting point: gelan-s.pt
