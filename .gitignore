@@ -2,3 +2,6 @@ datasets/
 *.pyc
 *.yaml
 runs/
+env/
+data/
+.vscode/
