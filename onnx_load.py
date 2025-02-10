@@ -4,8 +4,7 @@ import onnxruntime as rt
 #from onnxruntime.datasets import get_example
 
 
-model = "/home/ole/Documents/dev/anhthu/yolov9_gpl/results/sportimization-35/weights/gelan-c-ball-player-opset12_no_dynamic_250206.onnx"
-#model = "/home/ole/Documents/dev/anhthu/yolo/yolov9_clone/runs/gelan-s-seg-small-27_epoch/small2/export/gelan-c-seg-small-27_epoch.onnx"
+model = "/gelan-c-ball-player-opset12_no_dynamic_250206.onnx"
 sess = rt.InferenceSession(model, providers=rt.get_available_providers())
 
 
